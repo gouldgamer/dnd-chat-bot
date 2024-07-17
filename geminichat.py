@@ -5,19 +5,31 @@ import google.generativeai as genai
 
 
 # load_dotenv()
+
+if "api_key" not in st.session_state:
+    st.session_state.api_key = None  # Initialize the API key
+
 with st.sidebar:
     st.header("Settings")
     api_key_input = st.text_input("Enter your Google API Key", value="", type="password")
     submit_btn = st.button("Save API Key")
-if submit_btn:
-    GOOGLE_API_KEY = api_key_input
-    st.success("API key saved!")
-else:
-    GOOGLE_API_KEY = os.getenv("GEMINI_API_KEY")
 
+    if submit_btn:
+        st.session_state.api_key = api_key_input 
+        st.success("API key saved!")
+
+if st.session_state.api_key:
+    GOOGLE_API_KEY = st.session_state.api_key
+    genai.configure(api_key=GOOGLE_API_KEY)
+
+    # ... rest of your code ...
+else:
+    st.warning("Please enter your Google API Key in the sidebar.") 
+    
 genai.configure(api_key=GOOGLE_API_KEY)
 
-
+print(GOOGLE_API_KEY)
+st.write(GOOGLE_API_KEY)
 # Create the model
 # See https://ai.google.dev/api/python/google/generativeai/GenerativeModel
 generation_config = {
