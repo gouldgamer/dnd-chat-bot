@@ -1,15 +1,22 @@
 import streamlit as st
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import google.generativeai as genai
 
 
-load_dotenv()
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+# load_dotenv()
+with st.sidebar:
+    st.header("Settings")
+    api_key_input = st.text_input("Enter your Google API Key", value="", type="password")
+    submit_btn = st.button("Save API Key")
+if submit_btn:
+    GOOGLE_API_KEY = api_key_input
+    st.success("API key saved!")
+else:
+    GOOGLE_API_KEY = os.getenv("GEMINI_API_KEY")
 
+genai.configure(api_key=GOOGLE_API_KEY)
 
-
-genai.configure(api_key=GEMINI_API_KEY)
 
 # Create the model
 # See https://ai.google.dev/api/python/google/generativeai/GenerativeModel
