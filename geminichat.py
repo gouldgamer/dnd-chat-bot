@@ -1,10 +1,10 @@
 import streamlit as st
 import os
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 import google.generativeai as genai
 
 
-# load_dotenv()
+load_dotenv()
 
 if "api_key" not in st.session_state:
     st.session_state.api_key = None  # Initialize the API key
@@ -29,7 +29,7 @@ else:
 genai.configure(api_key=GOOGLE_API_KEY)
 
 print(GOOGLE_API_KEY)
-st.write(GOOGLE_API_KEY)
+# st.write(st.session_state)
 # Create the model
 # See https://ai.google.dev/api/python/google/generativeai/GenerativeModel
 generation_config = {
@@ -48,7 +48,7 @@ generation_config = {
   "top_k": 64,
 
   # Maximum number of tokens to generate.
-  "max_output_tokens": 8192,
+  "max_output_tokens": 600,
 
   # The MIME type of the generated response.
   "response_mime_type": "text/plain",
