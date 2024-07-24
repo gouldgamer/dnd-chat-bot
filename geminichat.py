@@ -55,34 +55,50 @@ generation_config = {
 }
 
 
-system_instructions="you are a dungen master playing dnd with the user."
+system_instructions1="you are a dungen master playing dnd with the user."
+system_instructions2="you are playing dnd"
 
-model = genai.GenerativeModel(
+model1 = genai.GenerativeModel(
   model_name="gemini-1.5-pro-latest",
   generation_config=generation_config,
-  system_instruction=system_instructions
+  system_instruction1=system_instructions1
 )
 
-chat = model.start_chat(
+model2 = genai.GenerativeModel(
+  model_name="gemini-1.5-pro-latest",
+  generation_config=generation_config,
+  system_instruction2=system_instructions2
+)
+
+
+chat1 = model1.start_chat(
+  history=[]
+)
+chat2 = model2.start_chat(
   history=[]
 )
 
 
 
 
+if "chat1" not in st.session_state:
+    st.session_state.chat1 = chat1
 
-if "chat" not in st.session_state:
-    st.session_state.chat = chat
+if "chat2" not in st.session_state:
+    st.session_state.chat2 = chat2
+
+st.title('DND THE GAME')
 
 
-st.title('Gemini Pro 1.5 Chat')
+for chatbot in [st.session_state.chat1.history, st.session_state.chat2.history]:
+    for message in chatbot.history:
+        if message.role == "model":
+            if chatbot == st.session_state.chat1:
+                with st.chat_message("model"):
+                    st.write(message.parts[0].text)
+        else:
+            st.chat_message(message.role).write(message.parts[0].text)
 
-
-for message in st.session_state.chat.history:
-    if message.role == "model":
-        st.chat_message("ai", avatar = "thumbnail-ai-ak.jpg").write(message.parts[0].text)
-    else:
-        st.chat_message(message.role).write(message.parts[0].text)
 
 prompt = st.chat_input("How can I help you?")
 
