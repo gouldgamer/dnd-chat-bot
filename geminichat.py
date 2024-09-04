@@ -60,13 +60,13 @@ system_instructions1="you are a dungen master Named Bob playing dnd with the use
 system_instructions2="you are going to respond to Bob your DM like you are playing dnd"
 
 model1 = genai.GenerativeModel(
-  model_name="gemini-1.5-pro-latest",
+  model_name="gemini-1.5-flash",
   generation_config=generation_config,
   system_instruction=system_instructions1
 )
 
 model2 = genai.GenerativeModel(
-  model_name="gemini-1.5-pro-latest",
+  model_name="gemini-1.5-flash",
   generation_config=generation_config,
   system_instruction=system_instructions2
 )
