@@ -17,6 +17,9 @@ with st.sidebar:
     if submit_btn:
         st.session_state.api_key = api_key_input 
         st.success("API key saved!")
+    
+    st.write("My othere website")
+    st.markdown('<a href="https://gouldgamer.github.io/dnd-spell-list/" target="_blank">D&D Library</a>', unsafe_allow_html=True)
 
 if st.session_state.api_key:
     GOOGLE_API_KEY = st.session_state.api_key
@@ -105,7 +108,7 @@ for chatbot in [st.session_state.chat1, st.session_state.chat2]:
 
 
 prompt = st.chat_input("How can I help you?")
-if st.button("coninue"):
+if st.button("continue"):
     prompt = "continue"
 if prompt or prompt == "continue":
     # ResourceExhausted: 429 Resource has been exhausted (e.g. check quota).
